@@ -2816,7 +2816,9 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                 printf("received getdata for: %s\n", inv.ToString().c_str());
 
             if (inv.type == MSG_BLOCK)
-            {
+          {
+			// 51 darosior
+			if (!doNotBroadcastBlocks)  {
                 // Send block from disk
                 map<uint256, CBlockIndex*>::iterator mi = mapBlockIndex.find(inv.hash);
                 if (mi != mapBlockIndex.end())
@@ -2837,8 +2839,10 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                         pfrom->hashContinue = 0;
                     }
                 }
-            }
-            else if (inv.IsKnownType())
+           
+	}
+   }      
+		    else if (inv.IsKnownType())
             {
                 // Send stream from relay memory
                 {
@@ -2857,6 +2861,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 
     else if (strCommand == "getblocks")
     {
+	    // 51 darosior
+        if (!doNotBroadcastBlocks) {
         CBlockLocator locator;
         uint256 hashStop;
         vRecv >> locator >> hashStop;
@@ -2887,10 +2893,12 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             }
         }
     }
-
+}
 
     else if (strCommand == "getheaders")
     {
+	// 51 darosior
+        if (!doNotBroadcastBlocks) {    
         CBlockLocator locator;
         uint256 hashStop;
         vRecv >> locator >> hashStop;
@@ -2923,7 +2931,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         }
         pfrom->PushMessage("headers", vHeaders);
     }
-
+ }
 
     else if (strCommand == "tx")
     {
@@ -2995,7 +3003,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 
 
     else if (strCommand == "block")
-    {
+   // 51 darosior
+        if (!doNotBroadcastBlocks) {
         CBlock block;
         vRecv >> block;
 
@@ -3824,17 +3833,19 @@ void static eBoostMiner(CWallet *pwallet)
     unsigned int nExtraNonce = 0;
 
     while (fGenerateBitcoins)
-    {
-        if (fShutdown)
-            return;
-        while (vNodes.empty() || IsInitialBlockDownload())
-        {
-            Sleep(1000);
-            if (fShutdown)
-                return;
-            if (!fGenerateBitcoins)
-                return;
-        }
+    { 
+	  // 51 darosior
+            // Disabled the wait for peers before mining because we want to mine on an older chain.  
+       // if (fShutdown)
+        //    return;
+       // while (vNodes.empty() || IsInitialBlockDownload())
+      //  {
+        //    Sleep(1000);
+       //    if (fShutdown)
+       //         return;
+        //    if (!fGenerateBitcoins)
+       //         return;
+      //  }
 
 
         //
