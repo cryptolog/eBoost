@@ -84,6 +84,9 @@ extern unsigned char pchMessageStart[4];
 extern int64 nTransactionFee;
 extern int64 nMinimumInputValue;
 
+// 51
+extern bool doNotBroadcastBlocks;
+
 // Minimum disk space required - used in CheckDiskSpace()
 static const uint64 nMinDiskSpace = 52428800;
 
