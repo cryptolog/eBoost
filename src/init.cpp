@@ -709,7 +709,10 @@ bool AppInit2()
         pwalletMain->ScanForWalletTransactions(pindexRescan, true);
         printf(" rescan      %15"PRI64d"ms\n", GetTimeMillis() - nStart);
     }
-
+    //51
+    // ********************************************************* Step 7.5: set block broadcasting
+	doNotBroadcastBlocks = GetBoolArg("-dontbroadcastblocks", false);
+    
     // ********************************************************* Step 8: import blocks
 
     if (mapArgs.count("-loadblock"))
