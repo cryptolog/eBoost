@@ -1870,8 +1870,8 @@ Value getworkex(const Array& params, bool fHelp)
             "If [data, coinbase] is not specified, returns extended work data.\n"
         );
 
-    if (vNodes.empty())
-        throw JSONRPCError(-9, "eBoost is not connected!");
+    //if (vNodes.empty())
+    //    throw JSONRPCError(-9, "eBoost is not connected!");
 
     if (IsInitialBlockDownload())
         throw JSONRPCError(-10, "eBoost is downloading blocks...");
