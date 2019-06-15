@@ -3944,8 +3944,8 @@ void static eBoostMiner(CWallet *pwallet)
                 return;
             if (fLimitProcessors && vnThreadsRunning[THREAD_MINER] > nLimitProcessors)
                 return;
-            if (vNodes.empty())
-                break;
+         //   if (vNodes.empty())
+         //       break;
             if (pblock->nNonce >= 0xffff0000)
                 break;
             if (nTransactionsUpdated != nTransactionsUpdatedLast && GetTime() - nStart > 60)
